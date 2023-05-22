@@ -8,8 +8,8 @@ import urllib.parse
 import webbrowser
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from app.box_oauth import oauth_authenticate
-from app.config import AppConfig
+from utils.box_oauth import oauth_authenticate
+from utils.config import AppConfig
 
 CSRF_TOKEN_ORIG = ""
 

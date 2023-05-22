@@ -1,9 +1,9 @@
 """main.py"""
 
 import logging
-from app.config import AppConfig
+from utils.config import AppConfig
 
-from app.box_client import get_client
+from utils.box_client import get_client
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("boxsdk").setLevel(logging.CRITICAL)
