@@ -27,8 +27,8 @@ This project contains exercises on how to use the Box Python SDK to interact wit
 
 ### Get the code
 ```bash
-git clone git@github.com:barduinor/box-python-oauth-template.git
-cd box-python-oauth-template
+git clone git@github.com:barduinor/box-workshop-python.git
+cd box-workshop-python
 ```
 
 ### Set up your virtual environment
@@ -70,3 +70,4 @@ If you get stuck or have questions, make sure to ask on our [Box Developer Forum
 
 # Workshops
 You'll find the workshop exercises in the [workshops](workshops) folder.
+* [Search](workshops/serach.md) - Using search in the Box API
