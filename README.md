@@ -4,13 +4,13 @@ style="margin-left:-10px;"
 width=40%;>
 
 
-# Box Python workshop project
-This project contains exercises on how to use the Box Python SDK to interact with the Box API.
+# Box Python Workshops
+This project contains workshops on how to use the Box Python SDK to interact with the Box API.
 
 
 ## Box configuration steps
 
-1. Create a Box free account if you don't already have one.
+1. Create a [Box free account](https://www.box.com/pricing/individual) if you don't already have one.
 2. Complete the registration process for a Box developer account.
 3. Making sure you're logged in navigate to the [Box Developer Console](https://app.box.com/developers/console). This will activate your developer account.
 4. Create a new Box application. Select Custom App, fill in the form and then click Next.
@@ -49,6 +49,13 @@ code .
 ```
 
 `Update the CLIENT_ID and CLIENT_SECRET field values in the env file with the Box application client id and client secret you created on the developer console.`
+```bash
+CLIENT_ID = YOUR_CLIENT_ID
+CLIENT_SECRET = YOU_CLIENT_SECRET
+CALLBACK_HOSTNAME = 127.0.0.1
+CALLBACK_PORT = 5000
+REDIRECT_URI = http://127.0.0.1:5000/callback
+```
 
 ## Run the application 
 
@@ -70,4 +77,4 @@ If you get stuck or have questions, make sure to ask on our [Box Developer Forum
 
 # Workshops
 You'll find the workshop exercises in the [workshops](workshops) folder.
-* [Search](workshops/serach.md) - Using search in the Box API
+* [Search](workshops/search/search.md) - Using search in the Box API
