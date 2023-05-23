@@ -4,7 +4,7 @@ from utils.config import AppConfig
 
 from utils.box_client import get_client
 
-from exercises.search.search_init_samples import upload_content_sample
+from exercises.search.upload_samples import upload_content_sample
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("boxsdk").setLevel(logging.CRITICAL)

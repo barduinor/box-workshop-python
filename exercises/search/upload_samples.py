@@ -71,6 +71,8 @@ def file_upload(client: Client, file_path: str, folder: Folder) -> File:
         # upload new version
         file = file.update_contents(file_path)
 
+    if "pineapple" in file.name:
+        file.update_info(data={"description": "aka ananas"})
     return file
 
 
