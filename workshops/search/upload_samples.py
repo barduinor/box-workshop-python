@@ -82,4 +82,4 @@ def upload_content_sample(client: Client):
 
     search_folder = create_box_folder(client, "search", wks_folder)
 
-    folder_upload(client, search_folder, "exercises/search/content_samples/")
+    folder_upload(client, search_folder, "workshops/search/content_samples/")

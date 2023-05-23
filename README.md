@@ -4,8 +4,8 @@ style="margin-left:-10px;"
 width=40%;>
 
 
-# Sample application using the Box Python SDK and oAuth 2.0
-This application is a template to get you started quickly with the Box Python SDK and oAuth 2.0.
+# Box Python workshop project
+This project contains exercises on how to use the Box Python SDK to interact with the Box API.
 
 
 ## Box configuration steps
@@ -25,32 +25,30 @@ This application is a template to get you started quickly with the Box Python SD
 
 ## Installation and configuration
 
-You will need to have [python](https://www.python.org/downloads/) installed on your machine. 
-
-> Get the code
+### Get the code
 ```bash
 git clone git@github.com:barduinor/box-python-oauth-template.git
 cd box-python-oauth-template
 ```
 
-> Set up your virtual environment
+### Set up your virtual environment
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-> Create your local application environment file
+### Create your local application environment file
 ```bash
 cp .env.sample .env
 ```
 
-> Open the code in the code editor of your choice.
+### Open the code in the code editor of your choice.
 ```
 code .
 ```
 
-> Update the CLIENT_ID and CLIENT_SECRET field values in the env file with the Box application client id and client secret you created on the developer console.
+`Update the CLIENT_ID and CLIENT_SECRET field values in the env file with the Box application client id and client secret you created on the developer console.`
 
 ## Run the application 
 
@@ -69,3 +67,6 @@ If you get stuck, you can delete the .outh.json file and reauthorize the applica
 
 ### Questions
 If you get stuck or have questions, make sure to ask on our [Box Developer Forum](https://support.box.com/hc/en-us/community/topics/360001932973-Platform-and-Developer-Forum)
+
+# Workshops
+You'll find the workshop exercises in the [workshops](workshops) folder.

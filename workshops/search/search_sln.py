@@ -97,28 +97,28 @@ if __name__ == "__main__":
     # search_results = simple_search("apple")
     # print_search_results(search_results)
 
-    # Search banana
-    search_results = simple_search("banana")
+    # # Search banana
+    # search_results = simple_search("banana")
 
-    print("--- Search Results ---")
-    for item in search_results:
-        print(
-            f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}"
-        )
-    print("--- End Search Results ---")
+    # print("--- Search Results ---")
+    # for item in search_results:
+    #     print(
+    #         f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}"
+    #     )
+    # print("--- End Search Results ---")
 
-    # Ancestor Search
-    folder_apple_banana = client.folder("208850093677")
-    folder_banana_apple = client.folder("208848037313")
-    search_results = simple_search(
-        "banana",
-        ancestor_folders=[folder_apple_banana, folder_banana_apple],
-        result_type="file",
-    )
+    # # Ancestor Search
+    # folder_apple_banana = client.folder("208850093677")
+    # folder_banana_apple = client.folder("208848037313")
+    # search_results = simple_search(
+    #     "banana",
+    #     ancestor_folders=[folder_apple_banana, folder_banana_apple],
+    #     result_type="file",
+    # )
 
-    print("--- Search Results ---")
-    for item in search_results:
-        print(
-            f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}"
-        )
-    print("--- End Search Results ---")
+    # print("--- Search Results ---")
+    # for item in search_results:
+    #     print(
+    #         f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}"
+    #     )
+    # print("--- End Search Results ---")
