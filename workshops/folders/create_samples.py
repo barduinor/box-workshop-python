@@ -25,6 +25,7 @@ def create_box_folder(
         else:
             raise err
 
+    logging.info("Folder %s with id: %s", folder.name, folder.id)
     return folder
 
 
@@ -71,15 +72,9 @@ def file_upload(client: Client, file_path: str, folder: Folder) -> File:
         # upload new version
         file = file.update_contents(file_path)
 
-    if "pineapple" in file.name:
-        file.update_info(data={"description": "aka ananas"})
-    return file
 
-
-def upload_content_sample(client: Client):
+def create_samples(client: Client):
     """Uploads sample content to Box."""
     wks_folder = create_box_folder(client, "workshops", client.folder("0"))
 
-    search_folder = create_box_folder(client, "search", wks_folder)
-
-    folder_upload(client, search_folder, "workshops/search/content_samples/")
+    create_box_folder(client, "folders", wks_folder)
