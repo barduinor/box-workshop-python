@@ -77,4 +77,5 @@ If you get stuck or have questions, make sure to ask on our [Box Developer Forum
 
 # Workshops
 You'll find the workshop exercises in the [workshops](workshops) folder.
+* [Folders](workshops/folders/folders.md) - Working with folders in the Box API
 * [Search](workshops/search/search.md) - Using search in the Box API
