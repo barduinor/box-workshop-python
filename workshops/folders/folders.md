@@ -372,6 +372,14 @@ Try them out and see what you can find:
 
 `Folders` are the primary way to organize content in Box.
 
+They are a virtual concept, but they are very familiar to users.
+
+Folder id 0 is the root folder for the user, and it is the only folder that does not have a parent folder.
+
+Folder names must be unique within the parent folder.
+
+There is no path navigation in Box, so make sure your app keeps track of the folder ids it needs to access.
+
 
 
 
