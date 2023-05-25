@@ -1,4 +1,4 @@
-"""Creates data for search exercises."""
+"""Uploads or Creates samples for exercises."""
 import pathlib
 import os
 import logging
