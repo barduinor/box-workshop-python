@@ -57,7 +57,6 @@ Open your Box account and verify that the following content was uploaded:
 Next, create a `folders.py` file on the root of the project that you will use to write your code:
 ```python
 """Box Folder workshop"""
-"""Box Folder workshop"""
 import logging
 from typing import Iterable
 
