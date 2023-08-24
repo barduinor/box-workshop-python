@@ -73,7 +73,7 @@ The authorization token last for 60 minutes, and the refresh toke for 60 days.
 If you get stuck, you can delete the .outh.json file and reauthorize the application.
 
 ### Questions
-If you get stuck or have questions, make sure to ask on our [Box Developer Forum](https://support.box.com/hc/en-us/community/topics/360001932973-Platform-and-Developer-Forum)
+If you get stuck or have questions, make sure to ask on our [Box Developer Forum](https://forum.box.com/c/box-platform/box-workshops/50)
 
 # Workshops
 You'll find the workshop exercises in the [workshops](workshops) folder.
