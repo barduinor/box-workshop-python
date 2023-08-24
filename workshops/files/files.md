@@ -3,8 +3,7 @@ File objects represent individual files in Box. They can be used to download a f
 
 
 ## Concepts
-
-
+File objects represent individual files in Box. They can be used to download a file's contents, upload new versions, and perform other common file operations such as move, copy, and delete.
 
 ## Files API
 References to our documentation:
@@ -88,7 +87,7 @@ def upload_file(box_folder: Folder, path_to_file: str) -> File:
 Then upload the `workshops/files/content_samples/sample_file.txt` file to the `files` folder.
 ```python
 if __name__ == "__main__":
-    client = get_client(conf)
+    ...
 
     files_root = client.folder(folder_id=FILES_ROOT).get()
     sample_file = upload_file(
@@ -125,6 +124,8 @@ def upload_file(box_client:Client, box_folder: Folder, path_to_file: str) -> Fil
 ```
 Then upload the `workshops/files/content_samples/sample_file.txt` file to the `files` folder.
 ```python
+if __name__ == "__main__":
+    ...
 
     files_root = client.folder(folder_id=FILES_ROOT).get()
 
@@ -171,6 +172,9 @@ def upload_file(box_client: Client, box_folder: Folder, path_to_file: str) -> Fi
 ```
 Then upload the `workshops/files/content_samples/sample_file.txt` file to the `files` folder.
 ```python
+if __name__ == "__main__":
+    ...
+
     sample_file = upload_file(
         client, files_root, "workshops/files/content_samples/sample_file.txt"
     )
@@ -226,6 +230,9 @@ def download_zip(
 ```
 Then lets zip the entire `root` folder:
 ```python
+if __name__ == "__main__":
+    ...
+
     user_root = client.folder(folder_id="0").get()
 
     items = []
@@ -247,17 +254,194 @@ sample_zip_downloaded.zip
 If you open the zip file you should see all content stored by your user.
 Note that the `items` list can be any combination of `files` and `folders`.
 
+## File information
+Now that we have some files to play with, let's explore the file object.
+The first thing is to get the file object, we can do that by using the `file` method of the `client` object.
+
+Create a method that returns a file object based on the file id:
+```python
+def get_file_by_id(file_id: str) -> File:
+    """Get a file by ID"""
+    return client.file(file_id=file_id).get()
+```
+Next, let's create another method that serializes the file object into a dictionary:
+```python
+def file_to_json(file: File) -> dict:
+    return {
+        "id": file.id,
+        "name": file.name,
+        "size": file.size,
+        "created_at": file.created_at,
+        "modified_at": file.modified_at,
+        "etag": file.etag,
+        "sha1": file.sha1,
+        "description": file.description,
+        "path_collection": file.path_collection,
+    }
+```
+Test this method on your main method:
+```python
+if __name__ == "__main__":
+    ...
+
+    file = get_file_by_id("1204688948039")
+    file_json = file_to_json(file)
+    print(file_json)
+```
+and you should get something like:
+```json
+{
+   "id":"1289038683607",
+   "name":"sample_file.txt",
+   "size":42,
+   "created_at":"2023-08-24T11:00:04-07:00",
+   "modified_at":"2023-08-24T11:03:21-07:00",
+   "etag":"1",
+   "sha1":"715a6fe7d575e27934e16e474c290048829ffc54",
+   "description":""
+}
+```
+There are many more properties you can explore, check the [API Reference](https://developer.box.com/reference/resources/file/) for more information.
+
+## Update a file
+Now that we have a file object, let's try to update it.
+Update the SAMPLE_FILE python constant with the id of the sample file inside your Box `All Files/workshops/files/` folder.
+In my case:
+```python
+SAMPLE_FILE = "223097997181"
+```
+
+Create a method that updates the description of a file:
+```python
+def file_update_description(file: File, description: str) -> File:
+    return file.update_info(data={"description": description})
+```
+Change the description of the previous file:
+```python
+if __name__ == "__main__":
+    ...
+
+    file = get_file_by_id(SAMPLE_FILE)
+    file_json = file_to_json(file)
+    print(file_json)
+
+    file = file_update_description(file, "This is a sample file")
+    file = get_file_by_id(SAMPLE_FILE)
+    file_json = file_to_json(file)
+    print("\n\nAfter update:")
+    print(file_json)
+```
+Resulting in:
+```json
+{
+   "id":"1289038683607",
+   "name":"sample_file.txt",
+   "size":42,
+   "created_at":"2023-08-24T11:00:04-07:00",
+   "modified_at":"2023-08-24T11:42:39-07:00",
+   "etag":"2",
+   "sha1":"715a6fe7d575e27934e16e474c290048829ffc54",
+   "description":"This is a sample file"
+}
+```
+## List the contents of a folder
+We need a method to list the contents of a folder.
+Add this method to your `files.py` file:
+```python
+def folder_list_contents(folder: Folder):
+    items = folder.get_items()
+    print(f"\nFolder [{folder.name}] content:")
+    for item in items:
+        print(f"   {item.type} {item.id} {item.name}")
+```
+
+## Copy a file
+Now lets duplicate the file we just updated, and list the folder contents:
+We can do this directly in our main method:
+```python
+if __name__ == "__main__":
+    ...
+
+    files_folder = client.folder(folder_id=FILES_ROOT).get()
+    try:
+        file_copied = file.copy(parent_folder=files_folder, name="sample_file_copy.txt")
+    except BoxAPIException as err:
+        if err.code == "item_name_in_use":
+            logging.warning("File already exists, we'll use it")
+            file_copied_id = err.context_info["conflicts"]["id"]
+            file_copied = get_file_by_id(file_copied_id)
+        else:
+            raise err
+    folder_list_contents(files_folder)
+```
+The try block is there to prevent the script from failing if the file already exists, since we'll be running this script multiple times.
+
+Resulting in:
+```
+Folder [files] content:
+   file 1289038683607 sample_file.txt
+   file 1289100188824 sample_file_copy.txt
+```
+
+## Move a file
+Now lets move the file we just copied to the root of the box account:
+```python
+if __name__ == "__main__":
+    ...
+
+    root_folder = client.folder(folder_id="0").get()
+    try:
+        file_moved = file_copied.move(parent_folder=root_folder)
+    except BoxAPIException as err:
+        if err.code == "item_name_in_use":
+            logging.warning("File already exists, we'll use it")
+            file_moved_id = err.context_info["conflicts"]["id"]
+            file_moved = get_file_by_id(file_moved_id)
+        else:
+            raise err
+    folder_list_contents(root_folder)
+```
+Again we need a `try` block.
+
+Resulting in:
+```
+Folder [All Files] content:
+   folder 216797257531 My Signed Documents
+   folder 221723756896 UIE Samples
+   folder 223095001439 workshops
+   file 1204688948039 Get Started with Box.pdf
+   file 1289100188824 sample_file_copy.txt
+```
+
+## Delete a file
+Finally we'll delete the file we just copied:
+```python
+if __name__ == "__main__":
+    ...
+    file_moved.delete()
+    folder_list_contents(root_folder)
+```
+Resulting in:
+```
+Folder [All Files] content:
+   folder 216797257531 My Signed Documents
+   folder 221723756896 UIE Samples
+   folder 223095001439 workshops
+   file 1204688948039 Get Started with Box.pdf
+```
 
 ## Extra Credit
 There are many more methods you can try for the file object.
 Try them out and see what you can find:
-* []()
-* []()
-* []()
-* []()
+* Create a method to rename a file.
+* Create a method that returns the complete path (operating system style) of a file object
+* Implement the chunked upload method
+* Implement the manual upload method 
+
 
 # Final thoughts
-
+`File` objects are very powerful, they allow you to perform many operations on files. This workshop only scratched the surface of what you can do with them.
+We'll explore more of them in the other workshops.
 
 
 
