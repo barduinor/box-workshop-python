@@ -55,8 +55,9 @@ Create a global constant named `SAMPLE_FILE` and make it equal to the id of the 
 
 import logging
 
-from boxsdk import Client
+from boxsdk import Client, BoxAPIException
 from boxsdk.object.file import File
+from boxsdk.object.comment import Comment
 
 from utils.config import AppConfig
 from utils.box_client import get_client
