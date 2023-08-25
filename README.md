@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 ### Create your local application environment file
 ```bash
-cp env.sample .env
+cp sample.env .env
 ```
 
 ### Open the code in the code editor of your choice.
