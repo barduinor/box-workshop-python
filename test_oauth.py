@@ -20,15 +20,8 @@ def main():
     client = get_client(conf)
 
     user = client.user().get()
-    print("==================")
-    print(f"Hello, {user.name}")
-    print("------------------")
-    print("Root folder items:")
-    print("------------------")
-    items = client.folder("0").get_items()
-    for item in items:
-        print(f"Type: {item.type} ID: {item.id} Name: {item.name}")
-    print("==================")
+    user = client.user().get()
+    print(f"\nHello, I'm {user.name} ({user.login}) [{user.id}]")
 
 
 if __name__ == "__main__":

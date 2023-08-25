@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 ### Create your local application environment file
 ```bash
-cp .env.sample .env
+cp env.sample .env
 ```
 
 ### Open the code in the code editor of your choice.
@@ -48,20 +48,31 @@ cp .env.sample .env
 code .
 ```
 
-`Update the CLIENT_ID and CLIENT_SECRET field values in the env file with the Box application client id and client secret you created on the developer console.`
+`Update the CLIENT_ID and CLIENT_SECRET field values in the env file with the Box application client id and client secret you created on the developer console.
+Depending on the workshop you are working on, you may need to update other fields in the .env file.`
 ```bash
+# Common settings
 CLIENT_ID = YOUR_CLIENT_ID
 CLIENT_SECRET = YOU_CLIENT_SECRET
+
+# OAuth2 settings
 CALLBACK_HOSTNAME = 127.0.0.1
 CALLBACK_PORT = 5000
 REDIRECT_URI = http://127.0.0.1:5000/callback
+
+# CCG Settings
+ENTERPRISE_ID = YOUR_ENTERPRISE_ID
+CCG_USER_ID = THE_USER_ID
+
+# JWT Settings
+JWT_CONFIG_PATH = /path/to/your/jwt/config/file
 ```
 
-## Run the application 
-
+## Test the application 
+Depending on the type of authentication you'll be using test the associated files.
 
 ```bash
-python main.py
+python test_oauth.py
 ```
 
 The first time you run the application, it should open a web browser window and prompt you to log in to Box. 
