@@ -121,8 +121,10 @@ celerybeat.pid
 
 # Environments
 .env
+.env*
 .venv
 .oauth.json
+.jwt.config.json
 env/
 venv/
 ENV/
