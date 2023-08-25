@@ -198,16 +198,9 @@ There are a few more things you can do with comments:
 * Create a method to Edit a comment
 * Create a methos that serializes a comment to JSON
 * Improve the print method to print the replies to a comment idented
+* Try adding a comment that mentions a user
 
 
 # Final thoughts
-
-
-
-
-
-
-
-
-
+Comments really shine when you have a lot of users collaborating on a file, and you want to keep track of the conversation.
 
