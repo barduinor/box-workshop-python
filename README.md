@@ -79,4 +79,5 @@ If you get stuck or have questions, make sure to ask on our [Box Developer Forum
 You'll find the workshop exercises in the [workshops](workshops) folder.
 * [Folders](workshops/folders/folders.md) - List, recursion, create, update, rename, copy, error handling, and delete
 * [Files](workshops/files/files.md) - Upload, download, update, move, copy, error handling, and delete
+* [File Comments](workshops/comments/comments.md) - List, create, delete, and reply
 * [Search](workshops/search/search.md) - Using search in the Box API
