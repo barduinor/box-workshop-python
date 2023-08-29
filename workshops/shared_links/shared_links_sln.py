@@ -63,7 +63,7 @@ def main():
     print(f"\nShared link for {file.name}: {shared_link_file}")
 
     shared_link_view = file_shared_link(
-        file, SharedLinkAccess.OPEN, allow_download=True, allow_preview=True, allow_edit=False
+        file, SharedLinkAccess.OPEN, allow_download=False, allow_preview=True, allow_edit=False
     )
     print(f"\nShared link for {file.name}: {shared_link_view}")
 
