@@ -49,7 +49,7 @@ code .
 ```
 
 `Update the CLIENT_ID and CLIENT_SECRET field values in the env file with the Box application client id and client secret you created on the developer console.
-Depending on the workshop you are working on, you may need to update other fields in the .env file.`
+Depending on the workshop you are working on, you may need to update other environment variables in the .env file.`
 ```bash
 # Common settings
 CLIENT_ID = YOUR_CLIENT_ID
