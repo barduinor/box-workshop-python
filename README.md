@@ -83,6 +83,8 @@ By default the sample app prints the current user's name to the console, and lis
 The authorization token last for 60 minutes, and the refresh toke for 60 days.
 If you get stuck, you can delete the .outh.json file and reauthorize the application.
 
+JWT or CCG authentication **will not** require you to log in to Box.
+
 ### Questions
 If you get stuck or have questions, make sure to ask on our [Box Developer Forum](https://forum.box.com/c/box-platform/box-workshops/50)
 
@@ -92,3 +94,4 @@ You'll find the workshop exercises in the [workshops](workshops) folder.
 * [Files](workshops/files/files.md) - Upload, download, update, move, copy, error handling, and delete
 * [File Comments](workshops/comments/comments.md) - Interact with the activity feed and comments
 * [Search](workshops/search/search.md) - Using search in the Box API
+* [Shared Links](workshops/shared_links/shared_links.md) - Create and manage shared links
