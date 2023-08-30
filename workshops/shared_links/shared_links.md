@@ -133,7 +133,6 @@ Now try to open an incongnito window and paste the link, you should be able to d
 Then in an ormal browser window open box.com, navigate to the `/workshops/shared_links` and click the shared link icon on the file.
 
 ![Alt text](box_com_shared_link_dialog.png)
-![Alt text](image.png)
 
 ## Implementing permissions
 Update the `file_shared_link` method to accept the `permissions` parameters.
