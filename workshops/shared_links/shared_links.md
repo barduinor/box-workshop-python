@@ -97,7 +97,7 @@ if __name__ == "__main__":
 
 
 ## Create a shared link for a file
-Create a method that creates adn return a shared link for a file.
+Create a method that creates and return a shared link for a file.
 ```python
 class SharedLinkAccess(str, Enum):
     OPEN = "open"
