@@ -429,9 +429,9 @@ There are more image representations available:
 * Check out a few more representations for each file in the `DEMO_FOLDER`
 
 # Final thoughts
-Althoug the Python SDK does provide a specific method to get thumbnails for a document, most of the time, you'll be using the generic methods:
-1. `file.get_representation_info()` to get the list of representations available for a file
+Although the Python SDK does provide a specific method to get thumbnails for a document, most of the time, you'll be using the generic methods:
+1. `file.get_representation_info()` to get the list all the representations available for a file
 2. `file.get_representation_info(repre_hint)` to get a specific representation
 3. Download the representation using the `url_template` provided by the previous method if it is available.
-4. If the represenations are showing a `state` of `none` then you can trigger them by doing a `HTTP GET` on the `info_url`
+4. If the representations are showing a `state` of `none` then you can trigger them by doing a `HTTP GET` using the `info_url`
 
