@@ -112,12 +112,17 @@ def main():
     folder = client.folder(DEMO_FOLDER).get()
     folder_list_representation_status(folder, "extracted_text")
 
-    folder = client.folder("0").get()
-    folder_list_representation_status(folder, "extracted_text")
+    file_ppt_repr = file_representations(file_ppt, "[extracted_text]")
+    file_representations_print(file_ppt.name, file_ppt_repr)
 
-    file_other = client.file("1204688948039").get()
-    file_othe_repr = file_representations(file_other, "[extracted_text]")
-    representation_download(client.auth.access_token, file_othe_repr[0], file_other.name)
+    if file_ppt_repr[0].get("status").get("state") == "none":
+        info_url = file_ppt_repr[0].get("info").get("url")
+        do_request(info_url, client.auth.access_token)
+
+    file_ppt_repr = file_representations(file_ppt, "[extracted_text]")
+    file_representations_print(file_ppt.name, file_ppt_repr)
+
+    representation_download(client.auth.access_token, file_ppt_repr[0], file_ppt.name)
 
 
 if __name__ == "__main__":

@@ -317,8 +317,8 @@ And a new file on my local folder:
 
 [Document_(Powerpoint)_pptx.pdf](./img/Document_(Powerpoint)_pptx.pdf)
 
-## Get text representation
-Text representations may take a while to be extracted, or may even not be available on the account you're using, for example if you're using a free account.
+## Generate representations
+Representations may not always be available.
 
 Let's create a method that lists the status for a certain representation for all files in a folder:
 ```python
@@ -356,38 +356,73 @@ File Single Page.docx (1294096878155) state: none
 File ZIP.zip (1294105019347) state: not available
 ```
 No luck there, in my case I don't have a single text representation available.
-
-Let's try in the root folder:
+However for the ones where the status is none, we can request them to be generated. We do this by executing and HTTP GET on the info URL.
+Let's start by specifically request all details for the `[extracted_text]` representation of the `FILE_PPTX`:
 ```python
-def main():
+def main()
     ...
 
-    folder = client.folder("0").get()
-    folder_list_representation_status(folder, "extracted_text")
+    file_ppt_repr = file_representations(file_ppt, "[extracted_text]")
+    file_representations_print(file_ppt.name, file_ppt_repr)
 ```
 Resulting in:
+```json
+[
+    {
+        "representation": "extracted_text",
+        "properties": {},
+        "info": {
+            "url": "https://api.box.com/2.0/internal_files/1294096083753/versions/1415005153353/representations/extracted_text"
+        },
+        "status": {
+            "state": "none"
+        },
+        "content": {
+            "url_template": "https://public.boxcloud.com/api/2.0/internal_files/1294096083753/versions/1415005153353/representations/extracted_text/content/{+asset_path}"
+        }
+    }
+]
 ```
-Checking for extracted_text status in folder [All Files] (0)
-File Get Started with Box.pdf (1204688948039) state: success
-```
-Great, let's download it:
+Now we get the `info url` to trigger the text generation, and list the representation again:
 ```python
-def main():
+def main()
     ...
 
-    file_other = client.file("1204688948039").get()
-    file_othe_repr = file_representations(file_other, "[extracted_text]")
-    representation_download(client.auth.access_token, file_othe_repr[0], file_other.name)
-```
-Resulting in:
-```
-Checking for extracted_text status in folder [All Files] (0)
-File Get Started with Box.pdf (1204688948039) state: success
-Representation extracted_text saved to Get_Started_with_Box_pdf.extracted_text
-```
-And a new file on my local folder:
+    if file_ppt_repr[0].get("status").get("state") == "none":
+        info_url = file_ppt_repr[0].get("info").get("url")
+        do_request(info_url, client.auth.access_token)
 
-[Get_Started_with_Box_pdf.extracted_text](./img/Get_Started_with_Box_pdf.extracted_text)
+    file_ppt_repr = file_representations(file_ppt, "[extracted_text]")
+    file_representations_print(file_ppt.name, file_ppt_repr)
+```
+We can see that the state changed to `pending`:
+```json
+[
+    {
+        "representation": "extracted_text",
+        "properties": {},
+        "info": {
+            "url": "https://api.box.com/2.0/internal_files/1294096083753/versions/1415005153353/representations/extracted_text"
+        },
+        "status": {
+            "state": "pending"
+        },
+        "content": {
+            "url_template": "https://public.boxcloud.com/api/2.0/internal_files/1294096083753/versions/1415005153353/representations/extracted_text/content/{+asset_path}"
+        }
+    }
+]
+```
+## Get text representation
+Now all we need to do is download the representation:
+```python
+def main()
+    ...
+    representation_download(client.auth.access_token, file_ppt_repr[0], file_ppt.name)
+```
+And a new file showed up on my local folder:
+
+[Document_(Powerpoint)_pptx.extracted_text](./img/Document_(Powerpoint)_pptx.extracted_text)
 
 ## Extra Credit
 There are more image representations available:
@@ -398,4 +433,5 @@ Althoug the Python SDK does provide a specific method to get thumbnails for a do
 1. `file.get_representation_info()` to get the list of representations available for a file
 2. `file.get_representation_info(repre_hint)` to get a specific representation
 3. Download the representation using the `url_template` provided by the previous method if it is available.
+4. If the represenations are showing a `state` of `none` then you can trigger them by doing a `HTTP GET` on the `info_url`
 
