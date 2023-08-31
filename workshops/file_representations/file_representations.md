@@ -17,6 +17,7 @@ References to our documentation:
 * [SDK Files](https://github.com/box/box-python-sdk/blob/main/docs/usage/files.md#get-file-representations)
 * [API Guide](https://developer.box.com/guides/representations/)
 * [API Reference ](https://developer.box.com/reference/get-files-id/)
+* [Supported file types](https://developer.box.com/guides/representations/supported-file-types/)
 
 
 # Exercises
@@ -56,32 +57,35 @@ INFO:root:      File uploaded ZIP.zip (1294105019347)
 INFO:root:      File uploaded Document (Powerpoint).pptx (1294096083753)
 ```
 
-Next, create a `files_representations_init.py` file on the root of the project that you will use to write your code.
-Create a global constant named `REPRESENTATIONS_LINKS_ROOT` and make it equal to the id of the `file_representations` folder, in my case `223939315135`.
+Next, create a `files_representations.py` file on the root of the project that you will use to write your code.
+Create a global constant named `DEMO_FOLDER` and make it equal to the id of the `file_representations` folder, in my case `223939315135`.
 
 Create a global constants for each file with their file id that you got on the previous step.
 In my case:
 ```python
-FILE_DOCX = 1294096878155
-FILE_JS   = 1294098434302
-FILE_HTML = 1294094879490
-FILE_PDF  = 1294102659923
-FILE_MP3  = 1294103505129
-FILE_XLSX = 1294097951585
-FILE_JSON = 1294102660561
-FILE_ZIP  = 1294105019347
-FILE_PPTX = 1294096083753
+DEMO_FOLDER = 223939315135
+FILE_DOCX   = 1294096878155
+FILE_JS     = 1294098434302
+FILE_HTML   = 1294094879490
+FILE_PDF    = 1294102659923
+FILE_MP3    = 1294103505129
+FILE_XLSX   = 1294097951585
+FILE_JSON   = 1294102660561
+FILE_ZIP    = 1294105019347
+FILE_PPTX   = 1294096083753
 ```
 
 ```python
 """Box File representations"""
 
+import json
 import logging
-from boxsdk import Client
+import requests
+from typing import List
 
 from boxsdk.object.file import File
 from boxsdk.object.folder import Folder
-from boxsdk.object.item import Item
+
 
 from utils.config import AppConfig
 from utils.box_client import get_client
@@ -91,6 +95,7 @@ logging.getLogger("boxsdk").setLevel(logging.CRITICAL)
 
 conf = AppConfig()
 
+DEMO_FOLDER = 223939315135
 FILE_DOCX = 1294096878155
 FILE_JS = 1294098434302
 FILE_HTML = 1294094879490
@@ -165,7 +170,7 @@ Quite a lot info there, let's check this one that represents a file thumbnail:
 
 ## Get a specific representation
 In order to get a specific representation, you need to use the `representation hints` parameter on the method.
-For example, to get the png 1024x1024 representation of the `FILE_DOCX`:
+For example, to get the png 320x320 representation of the `FILE_DOCX`:
 ```python
 def main():
     ...
@@ -195,7 +200,7 @@ Resulting in:
     }
 ]
 ```
-Notice that the `state` is `success`, this means that the representation has been generated. If the representation is not available then the state will be `none`.
+Notice that the `state` is `success`, this means that the representation has been generated. If the representation is not available then the state will be `none`, `pending`, etc.
 
 ## Download the representation
 Now that we have the `url_template` we can download the representation.
@@ -263,6 +268,7 @@ And a new file has been downloaded to my local folder:
 
 ## Get thumbnail representation
 The python SDK as a helper method to get the thumbnail representation of a file:
+
 Let's create a specific method for it:
 ```python
 def file_thubmnail(file: File, dimensions: str, representation: str) -> bytes:
@@ -292,16 +298,104 @@ And I have a new file on my local folder:
 ![Single Page_docx_thumbnail.jpg](./img/Single_Page_docx_thumbnail.jpg)
 
 ## Get PDF representation
-TODO: Add PDF representation
+Some documents can be converted to PDF, let's try it with the `FILE_PPTX`:
+```python
+def main():
+    ...
+
+    file_ppt = client.file(FILE_PPTX).get()
+    print(f"\nFile {file_ppt.name} ({file_ppt.id})")
+    file_ppt_repr_pdf = file_representations(file_ppt, "[pdf]")
+    file_representations_print(file_ppt.name, file_ppt_repr_pdf)
+    representation_download(client.auth.access_token, file_ppt_repr_pdf[0], file_ppt.name)
+```
+resulting in:
+```
+Representation pdf saved to Document_(Powerpoint)_pptx.pdf
+```
+And a new file on my local folder:
+
+[Document_(Powerpoint)_pptx.pdf](./img/Document_(Powerpoint)_pptx.pdf)
 
 ## Get text representation
-`NOT WORKING`
-Let's use our generic representation method to get the text representation of the `FILE_PDF':
+Text representations may take a while to be extracted, or may even not be available on the account you're using, for example if you're using a free account.
+
+Let's create a method that lists the status for a certain representation for all files in a folder:
 ```python
+def folder_list_representation_status(folder: Folder, representation: str):
+    items = folder.get_items()
+    print(f"\nChecking for {representation} status in folder [{folder.name}] ({folder.id})")
+    for item in items:
+        if isinstance(item, File):
+            file_repr = file_representations(item, "[" + representation + "]")
+            if file_repr:
+                state = file_repr[0].get("status").get("state")
+            else:
+                state = "not available"
+            print(f"File {item.name} ({item.id}) state: {state}")
+```
+And look for `extracted_text` representation on the `DEMO_FOLDER`:
+```python
+def main():
+    ...
+
+    folder = client.folder(DEMO_FOLDER).get()
+    folder_list_representation_status(folder, "extracted_text")
+```
+Which results in:
+```
+Checking for extracted_text status in folder [file_representations] (223939315135)
+File Audio.mp3 (1294103505129) state: not available
+File Document (PDF).pdf (1294102659923) state: none
+File Document (Powerpoint).pptx (1294096083753) state: none
+File HTML.html (1294094879490) state: none
+File JS-Small.js (1294098434302) state: none
+File JSON.json (1294102660561) state: none
+File Preview SDK Sample Excel.xlsx (1294097951585) state: none
+File Single Page.docx (1294096878155) state: none
+File ZIP.zip (1294105019347) state: not available
+```
+No luck there, in my case I don't have a single text representation available.
+
+Let's try in the root folder:
+```python
+def main():
+    ...
+
+    folder = client.folder("0").get()
+    folder_list_representation_status(folder, "extracted_text")
+```
+Resulting in:
+```
+Checking for extracted_text status in folder [All Files] (0)
+File Get Started with Box.pdf (1204688948039) state: success
+```
+Great, let's download it:
+```python
+def main():
+    ...
+
+    file_other = client.file("1204688948039").get()
+    file_othe_repr = file_representations(file_other, "[extracted_text]")
+    representation_download(client.auth.access_token, file_othe_repr[0], file_other.name)
+```
+Resulting in:
+```
+Checking for extracted_text status in folder [All Files] (0)
+File Get Started with Box.pdf (1204688948039) state: success
+Representation extracted_text saved to Get_Started_with_Box_pdf.extracted_text
+```
+And a new file on my local folder:
+
+[Get_Started_with_Box_pdf.extracted_text](./img/Get_Started_with_Box_pdf.extracted_text)
 
 ## Extra Credit
-There are a few more things you can do:
+There are more image representations available:
+* Check out a few more representations for each file in the `DEMO_FOLDER`
 
 # Final thoughts
-
+Althoug the Python SDK does provide a specific method to get thumbnails for a document, most of the time, you'll be using the generic methods:
+1. `file.get_representation_info()` to get the list of representations available for a file
+2. `file.get_representation_info(repre_hint)` to get a specific representation
+3. Download the representation using the `url_template` provided by the previous method if it is available.
 

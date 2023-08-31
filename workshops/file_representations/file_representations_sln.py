@@ -4,11 +4,9 @@ import json
 import logging
 import requests
 from typing import List
-from boxsdk import Client
 
 from boxsdk.object.file import File
 from boxsdk.object.folder import Folder
-from boxsdk.object.item import Item
 
 
 from utils.config import AppConfig
@@ -18,7 +16,7 @@ logging.basicConfig(level=logging.INFO)
 logging.getLogger("boxsdk").setLevel(logging.CRITICAL)
 
 conf = AppConfig()
-
+DEMO_FOLDER = 223939315135
 FILE_DOCX = 1294096878155
 FILE_JS = 1294098434302
 FILE_HTML = 1294094879490
@@ -53,7 +51,7 @@ def representation_download(access_token: str, file_representation: str, file_na
 
     url_template = file_representation["content"]["url_template"]
     url = url_template.replace("{+asset_path}", "")
-    file_name = file_name.replace(".", "_") + "." + file_representation["representation"]
+    file_name = file_name.replace(".", "_").replace(" ", "_") + "." + file_representation["representation"]
 
     content = do_request(url, access_token)
 
@@ -68,6 +66,19 @@ def file_thubmnail(file: File, dimensions: str, representation: str) -> bytes:
     if not thumbnail:
         raise Exception(f"Thumbnail for {file.name} not available")
     return thumbnail
+
+
+def folder_list_representation_status(folder: Folder, representation: str):
+    items = folder.get_items()
+    print(f"\nChecking for {representation} status in folder [{folder.name}] ({folder.id})")
+    for item in items:
+        if isinstance(item, File):
+            file_repr = file_representations(item, "[" + representation + "]")
+            if file_repr:
+                state = file_repr[0].get("status").get("state")
+            else:
+                state = "not available"
+            print(f"File {item.name} ({item.id}) state: {state}")
 
 
 def main():
@@ -98,25 +109,15 @@ def main():
     file_representations_print(file_ppt.name, file_ppt_repr_pdf)
     representation_download(client.auth.access_token, file_ppt_repr_pdf[0], file_ppt.name)
 
-    # file_pdf = client.file(FILE_PDF).get()
-    # print(f"\nFile {file_pdf.name} ({file_pdf.id})")
+    folder = client.folder(DEMO_FOLDER).get()
+    folder_list_representation_status(folder, "extracted_text")
 
-    # file_pdf_text_repr = file_representations(file_pdf, "[extracted_text]")
-    # file_representations_print(file_pdf.name, file_pdf_text_repr)
+    folder = client.folder("0").get()
+    folder_list_representation_status(folder, "extracted_text")
 
-    # file_pdf_text = representation_download(client.auth.access_token, file_pdf_text_repr[0], file_pdf.name)
-
-    # folder = client.folder("223939315135").get()
-    # items = folder.get_items()
-    # for item in items:
-    #     if isinstance(item, File):
-    #         file = client.file(item.id).get()
-    #         file_repr = file_representations(file, "[pdf]")
-    #         if file_repr:
-    #             state = file_repr[0].get("status").get("state")
-    #         else:
-    #             state = "not available"
-    #         print(f"\nFile {item.name} ({item.id}) state: {state}")
+    file_other = client.file("1204688948039").get()
+    file_othe_repr = file_representations(file_other, "[extracted_text]")
+    representation_download(client.auth.access_token, file_othe_repr[0], file_other.name)
 
 
 if __name__ == "__main__":
