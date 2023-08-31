@@ -95,3 +95,4 @@ You'll find the workshop exercises in the [workshops](workshops) folder.
 * [File Comments](workshops/comments/comments.md) - Interact with the activity feed and comments
 * [Search](workshops/search/search.md) - Using search in the Box API
 * [Shared Links](workshops/shared_links/shared_links.md) - Create and manage shared links
+* [File Representations](workshops/file_representations/file_representations.md) - Working with file representations
