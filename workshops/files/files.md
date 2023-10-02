@@ -140,7 +140,7 @@ WARNING:root:File already exists, updating contents
 Uploaded sample_file.txt to files
 ```
 
-## Prefiligth check
+## Prefligth check
 There is another option to check if a file can be accepted by box before uploading it.
 It typically checks for file name duplication and file size, in case you have exceeded your quota.
 Modify the `upload_file` method to use the `preflight_check` method of the folder object:
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     )
     print(f"Uploaded {sample_file.name} to {files_root.name}")
 ```
-Resuting in:
+Resulting in:
 ```
 WARNING:root:File already exists, updating contents
 Uploaded sample_file.txt to files
@@ -216,7 +216,7 @@ sample_file_downloaded.txt
 ```
 
 ## Download a ZIP
-When you need to download muiple files and folders at once, you can use the `download_zip` method of the `client` object.
+When you need to download multiple files and folders at once, you can use the `download_zip` method of the `client` object.
 Create a method named `download_zip` that receives a `client` and a list of `items` and downloads the folder as a zip file to a `local_path`.
 
 ```python

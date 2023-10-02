@@ -10,7 +10,7 @@ Representations go way beyond thumbnails, they are a way to access the content o
 
 This feature has become more relevant with the rise of AI and LLM, as it allows you to extract the content of a file and use it for other purposes, for example sending it to OpenAI.
 
-Not all representations are availabe for all file types. For example, you can't get a text representation of an image file.
+Not all representations are available for all file types. For example, you can't get a text representation of an image file.
 
 ## File Representations API
 References to our documentation:

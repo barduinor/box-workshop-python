@@ -127,7 +127,7 @@ Hello, I'm Free Dev 001 (barduinor+001@gmail.com) [25428698627]
 
 Shared link for sample_file.txt: https://app.box.com/s/zu4ghhai9132qvckby2u3kdb11efmp2e
 ```
-Now try to open an incongnito window and paste the link, you should be able to download the file.
+Now try to open an incognito window and paste the link, you should be able to download the file.
 ![Alt text](browser_incognito_shared_link.png)
 
 Then in an ormal browser window open box.com, navigate to the `/workshops/shared_links` and click the shared link icon on the file.
@@ -165,7 +165,7 @@ Shared link for sample_file.txt: https://app.box.com/s/zu4ghhai9132qvckby2u3kdb1
 Shared link for sample_file.txt: https://app.box.com/s/zu4ghhai9132qvckby2u3kdb11efmp2e
 ```
 
-Note that the shared link utl did not change, and if you refresh your incongnito browser, the download button should ddisapeer.
+Note that the shared link utl did not change, and if you refresh your incognito browser, the download button should disappear.
 ![Alt text](browser_incognito_no_download.png)
 
 ## Create a shared link for a folder

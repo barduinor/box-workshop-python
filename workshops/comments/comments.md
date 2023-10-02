@@ -180,7 +180,7 @@ def file_comment_delete(client: Client, comment: Comment):
             raise err
 ```
 The exception is to handle the case where the comment was already deleted.
-This may happen when we delete a comment which also deletes all the replies, and then try to delte the reply again.
+This may happen when we delete a comment which also deletes all the replies, and then try to delete the reply again.
 In your main method, delete all comments for the file:
 ```python
 def main():
@@ -197,7 +197,7 @@ def main():
 ## Extra Credit
 There are a few more things you can do with comments:
 * Create a method to Edit a comment
-* Create a methos that serializes a comment to JSON
+* Create a methods that serializes a comment to JSON
 * Improve the print method to print the replies to a comment idented
 * Try adding a comment that mentions a user
 

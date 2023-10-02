@@ -167,7 +167,7 @@ It takes a few minutes to index the content.
 If you just uploaded the content, it may not be indexed yet.
 Wait a few minutes and try again.
 
-Noticed it pciked up:
+Noticed it picked up:
 * both files and folders
 * items with "apple" in the name
 * including "apple1", "apple2", and "apple3"
@@ -179,7 +179,7 @@ Noticed it pciked up:
 search_results = simple_search("apple banana")
 print_search_results(search_results)
 ```
-Notcie we have expanded our search. Now it is returning anything with "apple" or "banana" or both in the name.
+Notice we have expanded our search. Now it is returning anything with "apple" or "banana" or both in the name.
 
 ## Add another search for "apple banana" with the double quotes
 ```python
@@ -197,10 +197,10 @@ Type: folder ID: 208850093677 Name: apple banana,
 ## Try combining queries using AND, OR, and NOT
 * `apple NOT banana` should return items with both "apple" but nor "banana"
 * `apple AND pineapple` should return items with both "apple" and "pineapple"
-* `pineapple OR banana` should return items with "pineaplpe" or "banana"
+* `pineapple OR banana` should return items with "pineapple" or "banana"
 
 ## More searches
-Did you know that the plural of banana without the "b" is actually pineapple in 6 different languges?
+Did you know that the plural of banana without the "b" is actually pineapple in 6 different languages?
 Let's search for `ananas`:
 ```python
 # More Searches
@@ -374,7 +374,7 @@ Try them out and see what you can find:
 * direction
 
 # Final thoughts
-Altoguh powerful, the search API was primarely designed to help users find content in Box, and may not be suited for all use cases:
+Although powerful, the search API was primarily designed to help users find content in Box, and may not be suited for all use cases:
 * Box is not a file system, so it doesn't have paths.
 * It is an indexed search, so it may take a few minutes for the content to be indexed.
 * It indexes names, description, tags, comments often giving unexpected results to developers.

@@ -5,7 +5,7 @@ They are the primary way to organize content in Box.
 ## Concepts
 Box is not a file systems, but it does have a concept of folders, even if it is a somewhat virtual concept.
 This is because of the users familiarity with file systems, and the need to organize content.
-So a folder is essencially a container of items (files and folders), with a nested parent folder.
+So a folder is essentially a container of items (files and folders), with a nested parent folder.
 
 Folder id 0 is the root folder for the user, and it is the only folder that does not have a parent folder.
 Folder names must be unique within the parent folder.
@@ -273,7 +273,7 @@ Add a description to the `downloads` folder.
 ```python
 downloads.update_info(
     data={
-        "description": "This is where my donwloads go, remember to clean it once in a while"
+        "description": "This is where my downloads go, remember to clean it once in a while"
     }
 )
 print(f"{downloads.type} {downloads.id} {downloads.name}")
@@ -282,7 +282,7 @@ print(f"Description: {downloads.description}")
 Resulting in:
 ```
 folder 209415893720 downloads
-Description: This is where my donwloads go, remember to clean it once in a while
+Description: This is where my downloads go, remember to clean it once in a while
 ```
 ## Delete a folder
 Create a new folder called `tmp` inside `downloads`
@@ -291,7 +291,7 @@ Delete folder `tmp` and all its contents.
 
 The delete method accepts a `recursive` parameter that defaults to `True`, deleting all the contents of the folder, `no questions asked`.
 
-So `be carefull` when using it.
+So `be careful` when using it.
 
 ```python
     tmp = create_box_folder(client, "tmp", downloads)
