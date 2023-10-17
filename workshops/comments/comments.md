@@ -198,7 +198,7 @@ def main():
 There are a few more things you can do with comments:
 * Create a method to Edit a comment
 * Create a methods that serializes a comment to JSON
-* Improve the print method to print the replies to a comment idented
+* Improve the print method to print the replies to a comment indented
 * Try adding a comment that mentions a user
 
 
