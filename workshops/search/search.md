@@ -179,6 +179,25 @@ Noticed it picked up:
 search_results = simple_search("apple banana")
 print_search_results(search_results)
 ```
+```
+--- Search Results ---
+Type: folder ID: 231320711952 Name: apple banana
+Type: folder ID: 231318527838 Name: apple pineapple banana
+Type: folder ID: 231320108594 Name: banana apple
+Type: folder ID: 231319410565 Name: banana
+Type: folder ID: 231318889313 Name: apple
+Type: file ID: 1337960845864 Name: banana.txt
+Type: file ID: 1337971324252 Name: banana.txt
+Type: file ID: 1337959496665 Name: banana.txt
+Type: file ID: 1337968972110 Name: apple.txt
+Type: file ID: 1337956847194 Name: banana.txt
+Type: file ID: 1337966423041 Name: apple.txt
+Type: file ID: 1337967294253 Name: apple.txt
+Type: file ID: 1337963451641 Name: apple1.txt
+Type: file ID: 1337967213245 Name: apple2.txt
+Type: file ID: 1337962062207 Name: apple3.txt
+--- End Search Results ---
+```
 Notice we have expanded our search. Now it is returning anything with "apple" or "banana" or both in the name.
 
 ## Add another search for "apple banana" with the double quotes
@@ -195,7 +214,7 @@ Type: folder ID: 208850093677 Name: apple banana,
 ```
 
 ## Try combining queries using AND, OR, and NOT
-* `apple NOT banana` should return items with both "apple" but nor "banana"
+* `apple NOT banana` should return items with both "apple" but not "banana"
 * `apple AND pineapple` should return items with both "apple" and "pineapple"
 * `pineapple OR banana` should return items with "pineapple" or "banana"
 
@@ -218,7 +237,7 @@ Remember that the search doesn't look only at the name, but also at the descript
 `pineapple.txt` has the word `ananas` in the description and content.
 
 ## Try searching only in the name
-Modify your search method to only search in the name.
+Let's modify the search method to accept a parameter that allows the developer to specify in which attributes the search should be performed.
 ```python
 def simple_search(query: str, content_types: Iterable[str] = None) -> Iterable["Item"]:
     """Search by query in any Box content"""
@@ -377,7 +396,7 @@ Try them out and see what you can find:
 Although powerful, the search API was primarily designed to help users find content in Box, and may not be suited for all use cases:
 * Box is not a file system, so it doesn't have paths.
 * It is an indexed search, so it may take a few minutes for the content to be indexed.
-* It indexes names, description, tags, comments often giving unexpected results to developers.
+* It indexes names, description, tags, comments, and file content, often giving unexpected results to developers.
 
 
 

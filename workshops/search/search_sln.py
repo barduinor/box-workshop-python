@@ -94,7 +94,7 @@ if __name__ == "__main__":
     # print_search_results(search_results)
 
     # # Search for folders only
-    # search_results = simple_search("apple")
+    # search_results = simple_search("apple", result_type="folder")
     # print_search_results(search_results)
 
     # # Search banana
@@ -102,14 +102,12 @@ if __name__ == "__main__":
 
     # print("--- Search Results ---")
     # for item in search_results:
-    #     print(
-    #         f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}"
-    #     )
+    #     print(f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}")
     # print("--- End Search Results ---")
 
     # # Ancestor Search
-    # folder_apple_banana = client.folder("208850093677")
-    # folder_banana_apple = client.folder("208848037313")
+    # folder_apple_banana = client.folder("231320711952")
+    # folder_banana_apple = client.folder("231320108594")
     # search_results = simple_search(
     #     "banana",
     #     ancestor_folders=[folder_apple_banana, folder_banana_apple],
@@ -118,7 +116,5 @@ if __name__ == "__main__":
 
     # print("--- Search Results ---")
     # for item in search_results:
-    #     print(
-    #         f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}"
-    #     )
+    #     print(f"Type: {item.type} ID: {item.id} Name: {item.name} Folder: {item.parent.name}")
     # print("--- End Search Results ---")
