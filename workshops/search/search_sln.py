@@ -58,15 +58,15 @@ if __name__ == "__main__":
     # search_results = simple_search('"apple banana"')
     # print_search_results(search_results)
 
-    # # Operatos Search
+    # # Operators Search
     # search_results = simple_search("apple NOT banana")
     # print_search_results(search_results)
 
-    # # Operatos Search
+    # # Operators Search
     # search_results = simple_search("apple AND pineapple")
     # print_search_results(search_results)
 
-    # # Operatos Search
+    # # Operators Search
     # search_results = simple_search("pineapple OR banana")
     # print_search_results(search_results)
 
