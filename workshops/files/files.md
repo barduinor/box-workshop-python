@@ -140,7 +140,7 @@ WARNING:root:File already exists, updating contents
 Uploaded sample_file.txt to files
 ```
 
-## Prefligth check
+## Preflight check
 There is another option to check if a file can be accepted by box before uploading it.
 It typically checks for file name duplication and file size, in case you have exceeded your quota.
 Modify the `upload_file` method to use the `preflight_check` method of the folder object:
